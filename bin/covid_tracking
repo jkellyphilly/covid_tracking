@@ -1,3 +1,5 @@
 #!/usr/bin/env ruby
 
-puts "Hello World!"
+require_relative '../lib/covid_tracking'
+
+CovidTracking::CLI.new.call

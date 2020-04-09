@@ -1,6 +1,5 @@
-require "covid_tracking/version"
-
+# Instantiate the CovidTracking module
 module CovidTracking
-  class Error < StandardError; end
-  # Your code goes here...
 end
+
+require_relative '../config/environment'
