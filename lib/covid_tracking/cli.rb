@@ -5,7 +5,6 @@ class CovidTracking::CLI
   def call
     puts "Welcome to the CoVid-19 Tracker program. I hope you are staying safe and healthy during these trying times."
     load_data
-    sign_off
   end
 
   def load_data
@@ -16,7 +15,6 @@ class CovidTracking::CLI
   end
 
   def program_run
-    # Load all summary data
     puts "Information is updated from the data source every 15 minutes - this information was last updated at XXX."
     puts "What would you like to learn more about - a GLOBAL summary of COVID-19 spread, or a summary for a specific COUNTRY?"
     puts "Tip: you can also REFRESH the program to see if data has been updated."
@@ -39,7 +37,7 @@ class CovidTracking::CLI
         if user_input_again == "yes"
           program_run
         elsif user_input_again == "no"
-          self.sign_off
+          sign_off
           exit
         else
           puts "I didn't understand that command."
@@ -56,14 +54,14 @@ class CovidTracking::CLI
         if user_input_again == "yes"
           program_run
         elsif user_input_again == "no"
-          self.sign_off
+          sign_off
           exit
         else
           # should loop back around to see if I want to re-update my answer
           puts "I didn't understand that command."
         end
       elsif user_input == "exit"
-        self.sign_off
+        sign_off
         exit
       else
         puts "I didn't understand that command."
