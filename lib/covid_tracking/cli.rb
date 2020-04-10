@@ -2,6 +2,8 @@
 
 class CovidTracking::CLI
 
+  attr_accessor :current
+
   def call
     puts "Welcome to the CoVid-19 Tracker program. I hope you are staying safe and healthy during these trying times."
     load_data
@@ -11,6 +13,7 @@ class CovidTracking::CLI
     # Make a call to the DataLoader class to load all of our information in.
     puts "I am loading the data for you now..."
     sleep(3)
+    self.current = CovidTracking::DataLoader.new
     program_run
   end
 
@@ -44,8 +47,8 @@ class CovidTracking::CLI
         end
       elsif user_input == "global"
         puts "Global information on COVID-19 is: "
-        sleep(1)
-        puts "... really bad."
+        puts self.current.data
+
         sleep(1)
 
         # Ask the user if they'd like to keep data surfing
