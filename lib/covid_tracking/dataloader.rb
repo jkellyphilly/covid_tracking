@@ -46,6 +46,7 @@ class CovidTracking::DataLoader
     
     # Now, use the parser method to store the global's variables
     global_summary_info = summary_info.shift
+    binding.pry
     global_hash = parser(global_summary_info)
     binding.pry
     
@@ -69,19 +70,38 @@ class CovidTracking::DataLoader
   # Returns a hash with key/value pairs to match 
   # the formatting of a Summary object 
   def parser(info_string)
+    return_hash = {}
+    
     # Format the info_string properly and break apart into 
     # an array with all components
     info_string.delete!("\"")
     info = info_string.split(",")
     
-    # Iterate through the given information and build a hash for 
-    # the 
-    # new_array.each do |entry|
-      # title, value = entry.split(":")
-      # case title 
-      # when "TotalRecovered"
-      # summary.total_recovered = value.to_i
+    # Iterate through the given information and update the hash
+    info.each do |entry|
+      title, value = entry.split(":")
+      # TODO: Build a method that converts the CamelCase title 
+      # into a string_like_this that I can use to make it easier 
+      # to make a key
+      case title 
+      when "NewConfirmed"
+        return_hash["new_confirmed"] = value.to_i
+      when "TotalConfirmed"
+        return_hash["total_confirmed"] = value.to_i 
+      when "NewDeaths"
+        return_hash["new_deaths"] = value.to_i
+      when "TotalDeaths"
+        return_hash["total_deaths"] = value.to_i 
+      when "NewRecovered"
+        return_hash["new_recovered"] = value.to_i
+      when "TotalRecovered"
+        return_hash["total_recovered"] = value.to_i 
+      end
+      
+      binding.pry
       # perform for entire body (excluding time stamp)
-    # end
+    end
+    
+    return_hash
   end 
 end
