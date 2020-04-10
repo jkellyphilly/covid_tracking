@@ -1,0 +1,26 @@
+PATH
+  remote: .
+  specs:
+    covid_tracking (0.1.0)
+
+GEM
+  remote: https://rubygems.org/
+  specs:
+    coderay (1.1.2)
+    method_source (1.0.0)
+    pry (0.13.0)
+      coderay (~> 1.1)
+      method_source (~> 1.0)
+    rake (10.5.0)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  bundler (~> 2.0)
+  covid_tracking!
+  pry
+  rake (~> 10.0)
+
+BUNDLED WITH
+   2.0.1

@@ -12,7 +12,7 @@ class CovidTracking::CLI
   def load_data
     # Make a call to the DataLoader class to load all of our information in.
     puts "I am loading the data for you now..."
-    sleep(3)
+    sleep(2)
     self.current = CovidTracking::DataLoader.new
     #puts self.current.data
     program_run
