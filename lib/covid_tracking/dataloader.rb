@@ -11,31 +11,33 @@ class CovidTracking::DataLoader
 
   def initialize
     @data = self.call
+    #binding.pry
+    self.make_summaries
   end
-
+  
+  # Explain this method more fully
   def call
-    #"This is my call for now - this is simulating the data."
     url = URI("https://api.covid19api.com/summary")
-
+    
     https = Net::HTTP.new(url.host, url.port);  
     https.use_ssl = true
 
     request = Net::HTTP::Get.new(url)
 
     response = https.request(request).read_body
-    
-    binding.pry
   end
   
   def make_summaries 
     puts "Making the summaries now..."
-    # Make the summaries here 
-    # array of info = @data.split(/[{}]/)
-    # my_array.reject! {|entry| entry == "" || entry == "\n"}
+    
+    # First, clean up the given string  
+    summary_info = @data.split(/[{}]/)
+    summary_info.reject! {|entry| entry == "" || entry == "\n"}
     sleep (2)
     
-    # Manually make the first one (Global data)
-    # my_array.first.delete!("\":") # get rid of the special characters
+    # Manually make the first summary object (Global data)
+    global_summary = CovidTracking::Summary.new 
+    my_array.first.delete!("\":") # get rid of the special characters
     # global_sum = CovidTracking::Summary.new 
     # global_sum.name = my_array.shift # also removes the element from the array
     # global_sum_info = my_array.shift

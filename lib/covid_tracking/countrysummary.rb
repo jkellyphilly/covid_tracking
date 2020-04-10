@@ -1,6 +1,6 @@
 # Definition of the CountrySummary class
 
-class CountrySummary < Summary 
+class CovidTracking::CountrySummary < CovidTracking::Summary 
   
   attr_accessor :country_code
   

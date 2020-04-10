@@ -5,25 +5,28 @@ class CovidTracking::CLI
   attr_accessor :current
 
   def call
-    puts "Welcome to the CoVid-19 Tracker program. I hope you are staying safe and healthy during these trying times."
+    puts "Welcome to the CoVid-19 Tracker program. I hope you are staying safe and healthy during these unprecedented times."
     load_data
   end
 
+  # Make a call to the DataLoader class to load all of our information in.
   def load_data
-    # Make a call to the DataLoader class to load all of our information in.
     puts "I am loading the data for you now..."
-    sleep(2)
     self.current = CovidTracking::DataLoader.new
-    #puts self.current.data
+    sleep(2)
     program_run
   end
-
+  
+  # Main user interaction 
   def program_run
+    
+    # Ask for user input and get it
     puts "Information is updated from the data source every 15 minutes - this information was last updated at XXX."
     puts "What would you like to learn more about - a GLOBAL summary of COVID-19 spread, or a summary for a specific COUNTRY?"
     puts "Tip: you can also REFRESH the program to see if data has been updated."
-
-    user_input = ""
+    #puts "Please enter GLOBAL, COUNTRY, REFRESH, or EXIT."
+    #user_input = gets.strip.downcase
+    
     until user_input == "exit"
       puts "Please enter GLOBAL, COUNTRY, REFRESH, or EXIT."
       user_input = gets.strip.downcase
@@ -45,6 +48,7 @@ class CovidTracking::CLI
           exit
         else
           puts "I didn't understand that command."
+          puts "Please enter GLOBAL, COUNTRY, REFRESH, or EXIT."
         end
       elsif user_input == "global"
         puts "Global information on COVID-19 is: "
@@ -71,6 +75,8 @@ class CovidTracking::CLI
         puts "I didn't understand that command."
         sleep(1)
       end
+      
+      puts "Is this ever reached?"
     end
 
   end
