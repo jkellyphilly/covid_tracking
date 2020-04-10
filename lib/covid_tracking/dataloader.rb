@@ -93,9 +93,6 @@ class CovidTracking::DataLoader
       when "TotalRecovered"
         return_hash["total_recovered"] = value.to_i 
       end
-      
-      binding.pry
-      # perform for entire body (excluding time stamp)
     end
     
     return_hash
