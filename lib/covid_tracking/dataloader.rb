@@ -14,7 +14,15 @@ class CovidTracking::DataLoader
   end
 
   def call
-    "This is my call for now - this is simulating the data."
+    #"This is my call for now - this is simulating the data."
+    url = URI("https://api.covid19api.com/summary")
+
+    https = Net::HTTP.new(url.host, url.port);  
+    https.use_ssl = true
+
+    request = Net::HTTP::Get.new(url)
+
+    response = https.request(request).read_body
   end
 
 end
