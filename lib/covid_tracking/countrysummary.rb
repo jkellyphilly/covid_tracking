@@ -6,6 +6,16 @@ class CountrySummary < Summary
   
   @@all = []
   
+  #def initialize(attributes)
+    # use metaprogramming to assign each attribute to its instance variable 
+    # attributes.each {|key, value| self.send("#{key}=", value)
+    # save
+  #end 
+  
+  def save 
+    self.class.all << self
+  end 
+  
   def self.all 
     @@all
   end 

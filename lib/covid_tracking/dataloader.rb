@@ -23,6 +23,47 @@ class CovidTracking::DataLoader
     request = Net::HTTP::Get.new(url)
 
     response = https.request(request).read_body
+    
+    binding.pry
   end
-
+  
+  def make_summaries 
+    puts "Making the summaries now..."
+    # Make the summaries here 
+    # array of info = @data.split(/[{}]/)
+    # my_array.reject! {|entry| entry == "" || entry == "\n"}
+    sleep (2)
+    
+    # Manually make the first one (Global data)
+    # my_array.first.delete!("\":") # get rid of the special characters
+    # global_sum = CovidTracking::Summary.new 
+    # global_sum.name = my_array.shift # also removes the element from the array
+    # global_sum_info = my_array.shift
+    # parser(global_sum, global_sum_info)
+    
+    # Then, get time stamp for the global array (pop the last element and format it)
+    
+    # Now, we're left with an array (except for the "countries" first element)
+    
+    # my_array.each do |country|
+      # store each country
+      # country_hash = {}
+      # 
+    # end
+    
+  end
+  
+  def parser(summary, info_string)
+    # Class to parse a string with all the info
+    # use the argument input to store various data
+    
+    # new_array = info_string.split(",")
+    # new_array.each do |entry|
+      # title, value = entry.split(":")
+      # case title 
+      # when "TotalRecovered"
+      # summary.total_recovered = value.to_i
+      # perform for entire body (excluding time stamp)
+    # end
+  end 
 end
