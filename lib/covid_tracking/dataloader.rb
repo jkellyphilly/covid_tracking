@@ -35,21 +35,19 @@ class CovidTracking::DataLoader
     summary_info = @data.split(/[{}]/)
     summary_info.reject! {|entry| entry == "" || entry == "\n"}
     
-    # Manually make the first summary object (Global data)
-    global_summary = CovidTracking::Summary.new 
     
     # Take the first and last elements of the data array, which are 
     # the global summary's name and timestamp
-    global_summary.name = summary_info.shift
-    global_summary.name.delete!("\":")
-    global_summary.date = summary_info.pop
-    global_summary.date.delete!("\"],")
+    global_name = summary_info.shift
+    global_name.delete!("\":")
+    global_date = summary_info.pop
+    global_date.delete!("\"],")
     # TODO: break apart the date
     
     # Now, use the parser method to store the global's variables
     global_summary_info = summary_info.shift
+    global_hash = parser(global_summary_info)
     binding.pry
-    parser(global_summary, global_summary_info)
     
     #summary_info.first.delete!("\":") # get rid of the special characters
     # global_sum.name = my_array.shift # also removes the element from the array
@@ -68,11 +66,16 @@ class CovidTracking::DataLoader
     
   end
   
-  def parser(summary, info_string)
-    # Class to parse a string with all the info
-    # use the argument input to store various data
-    puts "Made it to the parser."
-    # new_array = info_string.split(",")
+  # Returns a hash with key/value pairs to match 
+  # the formatting of a Summary object 
+  def parser(info_string)
+    # Format the info_string properly and break apart into 
+    # an array with all components
+    info_string.delete!("\"")
+    info = info_string.split(",")
+    
+    # Iterate through the given information and build a hash for 
+    # the 
     # new_array.each do |entry|
       # title, value = entry.split(":")
       # case title 
