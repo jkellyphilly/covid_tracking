@@ -51,6 +51,10 @@ class CovidTracking::DataLoader
     # Update the global hash to include the name and date
     global_hash["name"] = global_name
     global_hash["date"] = global_date
+    
+    # Create the Summary object for global info 
+    global = CovidTracking::Summary.new(global_hash)
+    
     binding.pry
     
     # Now, we're left with an array (except for the "countries" first element)
