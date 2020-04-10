@@ -46,16 +46,12 @@ class CovidTracking::DataLoader
     
     # Now, use the parser method to store the global's variables
     global_summary_info = summary_info.shift
-    binding.pry
     global_hash = parser(global_summary_info)
+    
+    # Update the global hash to include the name and date
+    global_hash["name"] = global_name
+    global_hash["date"] = global_date
     binding.pry
-    
-    #summary_info.first.delete!("\":") # get rid of the special characters
-    # global_sum.name = my_array.shift # also removes the element from the array
-    # global_sum_info = my_array.shift
-    # parser(global_sum, global_sum_info)
-    
-    # Then, get time stamp for the global array (pop the last element and format it)
     
     # Now, we're left with an array (except for the "countries" first element)
     
