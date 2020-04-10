@@ -11,11 +11,11 @@ class CovidTracking::DataLoader
 
   def initialize
     @data = self.call
-    #binding.pry
     self.make_summaries
   end
   
-  # Explain this method more fully
+  # TODO: Explain this method more fully
+  # Retrieve the data via COVID API
   def call
     url = URI("https://api.covid19api.com/summary")
     
@@ -28,17 +28,30 @@ class CovidTracking::DataLoader
   end
   
   def make_summaries 
-    puts "Making the summaries now..."
+    puts "Data loaded. Making the summaries now..."
+    sleep(2)
     
     # First, clean up the given string  
     summary_info = @data.split(/[{}]/)
     summary_info.reject! {|entry| entry == "" || entry == "\n"}
-    sleep (2)
     
     # Manually make the first summary object (Global data)
     global_summary = CovidTracking::Summary.new 
-    my_array.first.delete!("\":") # get rid of the special characters
-    # global_sum = CovidTracking::Summary.new 
+    
+    # Take the first and last elements of the data array, which are 
+    # the global summary's name and timestamp
+    global_summary.name = summary_info.shift
+    global_summary.name.delete!("\":")
+    global_summary.date = summary_info.pop
+    global_summary.date.delete!("\"],")
+    # TODO: break apart the date
+    
+    # Now, use the parser method to store the global's variables
+    global_summary_info = summary_info.shift
+    binding.pry
+    parser(global_summary, global_summary_info)
+    
+    #summary_info.first.delete!("\":") # get rid of the special characters
     # global_sum.name = my_array.shift # also removes the element from the array
     # global_sum_info = my_array.shift
     # parser(global_sum, global_sum_info)
@@ -58,7 +71,7 @@ class CovidTracking::DataLoader
   def parser(summary, info_string)
     # Class to parse a string with all the info
     # use the argument input to store various data
-    
+    puts "Made it to the parser."
     # new_array = info_string.split(",")
     # new_array.each do |entry|
       # title, value = entry.split(":")
