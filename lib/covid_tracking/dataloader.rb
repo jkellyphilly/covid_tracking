@@ -11,7 +11,6 @@ class CovidTracking::DataLoader
 
   def initialize
     @data = self.call
-    self.make_summaries
   end
   
   # TODO: Explain this method more fully
@@ -53,9 +52,7 @@ class CovidTracking::DataLoader
     global_hash["date"] = global_date
     
     # Create the Summary object for global info 
-    global = CovidTracking::Summary.new(global_hash)
-    
-    binding.pry
+    CovidTracking::Summary.new(global_hash)
     
     # Now, we're left with an array (except for the "countries" first element)
     

@@ -14,6 +14,8 @@ class CovidTracking::CLI
     puts "I am loading the data for you now..."
     self.current = CovidTracking::DataLoader.new
     sleep(2)
+    self.current.make_summaries
+    binding.pry
     program_run
   end
   
