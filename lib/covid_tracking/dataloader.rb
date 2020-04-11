@@ -59,8 +59,6 @@ class CovidTracking::DataLoader
     #binding.pry
     
     if country_section_heading == "Countries"
-      # iterate through each country
-      binding.pry
       summary_info.each do |country_info|
         # Format the country_info string properly and create a hash with it
         country_info.delete!("\"")
@@ -86,7 +84,14 @@ class CovidTracking::DataLoader
     
     # Iterate through the given information and update the hash
     info.each do |entry|
-      title, value = entry.split(":")
+      # TODO: rename my_array
+      my_array = entry.split(":")
+      title = my_array.shift
+      if my_array.size == 1 
+        value = my_array[0]
+      else 
+        value = my_array.join(":")
+      end
       # TODO: Build a method that converts the CamelCase title 
       # into a string_like_this that I can use to make it easier 
       # to make a key
@@ -109,6 +114,8 @@ class CovidTracking::DataLoader
         return_hash["name"] = value 
       when "CountryCode"
         return_hash["country_code"] = value
+      when "Date"
+        return_hash["date"] = value
       end
     end
     
