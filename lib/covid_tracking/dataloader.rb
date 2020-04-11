@@ -36,11 +36,12 @@ class CovidTracking::DataLoader
     
     # Take the first and last elements of the data array, which are 
     # the global summary's name and timestamp
+    #binding.pry
     global_name = summary_info.shift
     global_name.delete!("\":")
     global_date = summary_info.pop
     global_date.delete!("\"],")
-    # TODO: break apart the date
+    # TODO: break apart the date or reformat it
     
     # Now, use the parser method to store the global's variables
     global_summary_info = summary_info.shift
@@ -53,13 +54,20 @@ class CovidTracking::DataLoader
     # Create the Summary object for global info 
     CovidTracking::Summary.new(global_hash)
     
-    # Now, we're left with an array (except for the "countries" first element)
+    country_section_heading = summary_info.shift
+    country_section_heading.delete!(",\":[")
+    #binding.pry
     
-    # my_array.each do |country|
-      # store each country
-      # country_hash = {}
-      # 
-    # end
+    if country_section_heading == "Countries"
+      # iterate through each country
+      # my_array.each do |country|
+        # store each country
+        # country_hash = {}
+        # 
+      # end
+    else 
+      puts "Error in make country summaries: API data format has changed and no longer is compatible with this code."
+    end
     
   end
   
