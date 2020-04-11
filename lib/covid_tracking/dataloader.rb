@@ -32,8 +32,7 @@ class CovidTracking::DataLoader
     
     # First, clean up the given string  
     summary_info = @data.split(/[{}]/)
-    summary_info.reject! {|entry| entry == "" || entry == "\n"}
-    
+    summary_info.reject! {|entry| entry == "" || entry == "\n" || entry == ","}
     
     # Take the first and last elements of the data array, which are 
     # the global summary's name and timestamp

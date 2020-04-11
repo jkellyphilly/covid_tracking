@@ -4,20 +4,20 @@ class CovidTracking::CountrySummary < CovidTracking::Summary
   
   attr_accessor :country_code
   
-  @@all = []
+  @@all_countries = []
   
-  #def initialize(attributes)
+  def initialize(attributes)
     # use metaprogramming to assign each attribute to its instance variable 
-    # attributes.each {|key, value| self.send("#{key}=", value)
-    # save
-  #end 
+    super
+    save
+  end 
   
   def save 
     self.class.all << self
   end 
   
   def self.all 
-    @@all
+    @@all_countries
   end 
   
   def self.reset 
