@@ -60,11 +60,14 @@ class CovidTracking::DataLoader
     
     if country_section_heading == "Countries"
       # iterate through each country
-      # my_array.each do |country|
-        # store each country
-        # country_hash = {}
-        # 
-      # end
+      binding.pry
+      summary_info.each do |country_info|
+        # Format the country_info string properly and create a hash with it
+        country_info.delete!("\"")
+        country_hash = parser(country_info)
+        CovidTracking::CountrySummary.new(country_hash)
+      end
+      binding.pry
     else 
       puts "Error in make country summaries: API data format has changed and no longer is compatible with this code."
     end
@@ -87,6 +90,8 @@ class CovidTracking::DataLoader
       # TODO: Build a method that converts the CamelCase title 
       # into a string_like_this that I can use to make it easier 
       # to make a key
+      
+      # TODO: figure out a way to store the date
       case title 
       when "NewConfirmed"
         return_hash["new_confirmed"] = value.to_i
@@ -100,6 +105,10 @@ class CovidTracking::DataLoader
         return_hash["new_recovered"] = value.to_i
       when "TotalRecovered"
         return_hash["total_recovered"] = value.to_i 
+      when "Country"
+        return_hash["name"] = value 
+      when "CountryCode"
+        return_hash["country_code"] = value
       end
     end
     
