@@ -30,4 +30,5 @@ class CovidTracking::Summary
       puts "    Total Recovered Cases: #{summary.total_recovered}"
       puts "This information was last updated at #{summary.date}"
     end
+  end
 end

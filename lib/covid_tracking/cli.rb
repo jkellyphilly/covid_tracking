@@ -15,9 +15,16 @@ class CovidTracking::CLI
     self.current = CovidTracking::DataLoader.new
     sleep(2)
     self.current.make_summaries
-    binding.pry
     program_run
   end
+  
+  def reload_data
+    puts "Refreshing data now..."
+    sleep(2)
+    self.current.reset 
+    binding.pry
+    program_run
+  end 
   
   # Main user interaction 
   def program_run
@@ -26,14 +33,15 @@ class CovidTracking::CLI
     puts "Information is updated from the data source every 15 minutes - this information was last updated at XXX."
     puts "What would you like to learn more about - a GLOBAL summary of COVID-19 spread, or a summary for a specific COUNTRY?"
     puts "Tip: you can also REFRESH the program to see if data has been updated."
-    #puts "Please enter GLOBAL, COUNTRY, REFRESH, or EXIT."
-    #user_input = gets.strip.downcase
+    puts "Please enter GLOBAL, COUNTRY, REFRESH, or EXIT."
+    user_input = gets.strip.downcase
     
     until user_input == "exit"
-      puts "Please enter GLOBAL, COUNTRY, REFRESH, or EXIT."
-      user_input = gets.strip.downcase
+      #puts "Please enter GLOBAL, COUNTRY, REFRESH, or EXIT."
+      #user_input = gets.strip.downcase
+      
       if user_input == "refresh"
-        load_data
+        reload_data
       elsif user_input == "country"
         puts "Here's all of the countries that you can choose from: "
         sleep(1)
@@ -53,19 +61,20 @@ class CovidTracking::CLI
           puts "Please enter GLOBAL, COUNTRY, REFRESH, or EXIT."
         end
       elsif user_input == "global"
-        puts "Global information on COVID-19 is: "
-        puts self.current.data
+        #puts "Global information on COVID-19 is: "
+        #puts self.current.data
 
-        sleep(1)
+        #sleep(1)
 
         # Ask the user if they'd like to keep data surfing
         puts "Would you like to keep learning more about COVID-19 spread?"
         user_input_again = gets.strip.downcase
         if user_input_again == "yes"
+          puts "Doing the drill again!"
           program_run
         elsif user_input_again == "no"
           sign_off
-          exit
+          #exit
         else
           # should loop back around to see if I want to re-update my answer
           puts "I didn't understand that command."
@@ -80,6 +89,8 @@ class CovidTracking::CLI
       
       puts "Is this ever reached?"
     end
+    
+    sign_off
 
   end
 
