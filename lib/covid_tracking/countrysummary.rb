@@ -25,7 +25,17 @@ class CovidTracking::CountrySummary < CovidTracking::Summary
   end 
   
   def self.find_by_name(name)
-    # Iterate through all countries
+    self.all.select {|country| country.name == name}
+  end 
+  
+  def self.find_by_code(code)
+    self.all.select {|country| country.country_code == code}
+  end 
+  
+  def self.print_all_list
+    self.all.each do |summary|
+      puts "#{summary.name} (#{summary.country_code})"
+    end
   end 
   
 end

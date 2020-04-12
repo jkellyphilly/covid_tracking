@@ -16,14 +16,16 @@ class CovidTracking::DataLoader
   # TODO: Explain this method more fully
   # Retrieve the data via COVID API
   def call
-    url = URI("https://api.covid19api.com/summary")
     
+    url = URI("https://api.covid19api.com/summary")
     https = Net::HTTP.new(url.host, url.port);  
     https.use_ssl = true
 
     request = Net::HTTP::Get.new(url)
+    binding.pry
 
     response = https.request(request).read_body
+    
   end
   
   def make_summaries 
@@ -34,13 +36,14 @@ class CovidTracking::DataLoader
     summary_info = @data.split(/[{}]/)
     summary_info.reject! {|entry| entry == "" || entry == "\n" || entry == ","}
     
+    # TODO: figure out why global_date is intermittently breaking 
     # Take the first and last elements of the data array, which are 
     # the global summary's name and timestamp
     #binding.pry
     global_name = summary_info.shift
     global_name.delete!("\":")
     global_date = summary_info.pop
-    binding.pry
+    #binding.pry
     global_date.delete!("\"],")
     # TODO: break apart the date or reformat it
     

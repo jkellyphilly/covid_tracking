@@ -19,6 +19,7 @@ class CovidTracking::Summary
     self.all.clear
   end
   
+  # TODO: print in nicer colors
   def self.print_all
     self.all.each do |summary|
       puts "#{summary.name}:"
