@@ -40,6 +40,7 @@ class CovidTracking::DataLoader
     global_name = summary_info.shift
     global_name.delete!("\":")
     global_date = summary_info.pop
+    binding.pry
     global_date.delete!("\"],")
     # TODO: break apart the date or reformat it
     
@@ -65,7 +66,7 @@ class CovidTracking::DataLoader
         country_hash = parser(country_info)
         CovidTracking::CountrySummary.new(country_hash)
       end
-      binding.pry
+      #binding.pry
     else 
       puts "Error in make country summaries: API data format has changed and no longer is compatible with this code."
     end
@@ -120,5 +121,10 @@ class CovidTracking::DataLoader
     end
     
     return_hash
+  end 
+  
+  def reset 
+    @data = self.call 
+    make_summaries
   end 
 end

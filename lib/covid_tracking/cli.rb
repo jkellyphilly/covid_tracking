@@ -21,7 +21,9 @@ class CovidTracking::CLI
   def reload_data
     puts "Refreshing data now..."
     sleep(2)
-    self.current.reset 
+    CovidTracking::Summary.reset 
+    CovidTracking::CountrySummary.reset
+    self.current.reset
     binding.pry
     program_run
   end 
@@ -61,33 +63,32 @@ class CovidTracking::CLI
           puts "Please enter GLOBAL, COUNTRY, REFRESH, or EXIT."
         end
       elsif user_input == "global"
-        #puts "Global information on COVID-19 is: "
-        #puts self.current.data
-
-        #sleep(1)
+        CovidTracking::Summary.print_all
+        sleep(3)
 
         # Ask the user if they'd like to keep data surfing
         puts "Would you like to keep learning more about COVID-19 spread?"
         user_input_again = gets.strip.downcase
-        if user_input_again == "yes"
-          puts "Doing the drill again!"
-          program_run
-        elsif user_input_again == "no"
-          sign_off
-          #exit
-        else
-          # should loop back around to see if I want to re-update my answer
+        
+        until user_input_again == "yes" || user_input_again == "no"
           puts "I didn't understand that command."
+          puts "Please enter YES or NO"
+          user_input_again = gets.strip.downcase
+        end
+        
+        if user_input_again == "yes"
+          puts "Back to the main program..."
+          sleep(2)
+          program_run
+        else
+          sign_off
         end
       elsif user_input == "exit"
         sign_off
-        exit
       else
         puts "I didn't understand that command."
         sleep(1)
       end
-      
-      puts "Is this ever reached?"
     end
     
     sign_off
@@ -97,6 +98,7 @@ class CovidTracking::CLI
   def sign_off
     puts "Thank you for using the COVID-19 Tracking App."
     puts "Please remember to wash your hands frequently and practice social distancing whenever possible!"
+    exit
   end
 
 end
