@@ -15,6 +15,7 @@ class CovidTracking::CLI
     self.data_loader = CovidTracking::DataLoader.new
     sleep(2)
     self.data_loader.make_summaries
+    binding.pry
     program_run
   end
   
@@ -43,14 +44,24 @@ class CovidTracking::CLI
       if user_input == "refresh"
         reload_data
       elsif user_input == "country"
-        puts "Here's all of the countries that you can choose from: "
+        puts "Here's all of the countries and territories that you can choose from: "
         sleep(1)
-        CovidTracking::Country.print_all_list
+        CovidTracking::CountrySummary.print_all_list
         
-        puts "Please enter a country's name or its 3-letter code (in all caps!) that you'd like to see more info on."
+        puts "Please enter a country's name or its 2-letter code (in all caps!) that you'd like to see more info on."
         
         user_country = gets.strip
+        
+        # If the user input is 2 characters long and is uppercase, it's a code 
+        if user_country.size == 2 && user_country == user_country.upcase 
+          # find the country by its code 
+        else 
+          # find the country by its name 
+        end 
+        
         binding.pry
+        
+        # country.print_info
         sleep(1)
         
         # Ask the user if they'd like to keep data surfing        

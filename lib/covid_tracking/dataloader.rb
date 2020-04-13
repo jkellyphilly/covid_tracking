@@ -22,7 +22,7 @@ class CovidTracking::DataLoader
     https.use_ssl = true
 
     request = Net::HTTP::Get.new(url)
-    binding.pry
+    #binding.pry
 
     response = https.request(request).read_body
     
