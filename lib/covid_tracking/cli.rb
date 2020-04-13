@@ -87,6 +87,15 @@ class CovidTracking::CLI
         puts "Which facts would you like to see?"
         # print_factoids_options
 
+        factoid_input = get.strip.downcase
+        
+        #case factoid_input
+        
+        # Country with most cases, country with most new cases, 
+        # countries with least cases, country with most recovered?
+
+        continue_browsing
+        
       else
         puts "I didn't understand that command."
         sleep(1)
