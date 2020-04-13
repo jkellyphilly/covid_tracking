@@ -21,21 +21,20 @@ class CovidTracking::CountrySummary < CovidTracking::Summary
   # Print the full list of countries to choose from 
   def self.print_all_list
     self.all.each do |summary|
-      puts "#{summary.name} (#{summary.country_code})"
+      puts "#{summary.name} (#{summary.country_code})".light_cyan
     end
   end 
   
-  # TODO: print the attributes in nicer colors
   # Print the attributes of this specific country 
   def print_info
-    puts "#{self.name} (#{self.country_code}):"
-    puts "    New Confirmed Cases: #{self.new_confirmed}"
-    puts "    Total Confirmed Cases: #{self.total_confirmed}"
-    puts "    New Deaths: #{self.new_deaths}"
-    puts "    Total Deaths: #{self.total_deaths}"
-    puts "    New Recovered Cases: #{self.new_recovered}"
-    puts "    Total Recovered Cases: #{self.total_recovered}"
-    puts "This information was last updated at #{self.date}"
+    puts "#{self.name} (#{self.country_code}):".light_cyan
+    puts "    New Confirmed Cases: #{self.new_confirmed}".light_red
+    puts "    Total Confirmed Cases: #{self.total_confirmed}".light_red
+    puts "    New Deaths: #{self.new_deaths}".light_red
+    puts "    Total Deaths: #{self.total_deaths}".light_red
+    puts "    New Recovered Cases: #{self.new_recovered}".light_red
+    puts "    Total Recovered Cases: #{self.total_recovered}".light_red
+    puts "This information was last updated at #{self.date}".light_cyan
   end
   
   # prints out the countries with the most cases 
@@ -46,7 +45,7 @@ class CovidTracking::CountrySummary < CovidTracking::Summary
     most_cases_array = sorted_array.select {|c| c.total_confirmed == sorted_array.last.total_confirmed}
   
     most_cases_array.each do |country|
-      puts "     #{country.name}: #{country.total_confirmed} cases" 
+      puts "     #{country.name}: #{country.total_confirmed} cases".light_cyan 
     end
   end
   
@@ -58,7 +57,7 @@ class CovidTracking::CountrySummary < CovidTracking::Summary
     least_cases_array = sorted_array.select {|c| c.total_confirmed == sorted_array.first.total_confirmed}
   
     least_cases_array.each do |country|
-      puts "     #{country.name}: #{country.total_confirmed} cases" 
+      puts "     #{country.name}: #{country.total_confirmed} cases".light_cyan
     end
   end 
   
@@ -70,7 +69,7 @@ class CovidTracking::CountrySummary < CovidTracking::Summary
     most_new_cases_array = sorted_array.select {|c| c.new_confirmed == sorted_array.last.new_confirmed}
   
     most_new_cases_array.each do |country|
-      puts "     #{country.name}: #{country.new_confirmed} cases" 
+      puts "     #{country.name}: #{country.new_confirmed} cases".light_cyan
     end
   end
   
@@ -82,7 +81,7 @@ class CovidTracking::CountrySummary < CovidTracking::Summary
     most_rec_cases = sorted_array.select {|c| c.total_recovered == sorted_array.last.total_recovered}
   
     most_rec_cases.each do |country|
-      puts "     #{country.name}: #{country.total_recovered} out of #{country.total_confirmed} total cases have recovered" 
+      puts "     #{country.name}: #{country.total_recovered} out of #{country.total_confirmed} total cases have recovered".light_cyan 
     end
   end 
 end

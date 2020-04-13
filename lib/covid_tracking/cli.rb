@@ -73,42 +73,42 @@ class CovidTracking::CLI
           end 
         end
         
-        # Ask the user if they'd like to keep data surfing
-        sleep(2)
+        # Ask the user if they'd like to keep learning
         continue_browsing
         
       elsif user_input == "global"
         CovidTracking::Summary.print_all
         sleep(2)
         
-        # Ask the user if they'd like to keep data surfing        
+        # Ask the user if they'd like to keep learning        
         continue_browsing
         
       elsif user_input == "factoids"
         print_factoids_options
         puts "Which factoid would you like to see?".light_magenta
-        puts "Please enter MOST CASES, LEAST CASES, MOST NEW CASES, or MOST RECOVERED CASES".green
+        puts "Please enter MOST, LEAST, MOST NEW, or MOST RECOVERED".green
 
         factoid_input = gets.strip.downcase
         
         case factoid_input
-        when "most cases"
+        when "most"
           puts "The country/countries with the most cases are: ".light_magenta
           CovidTracking::CountrySummary.most_cases
-        when "least cases"
+        when "least"
           puts "The country/countries with the least cases are: ".light_magenta
           CovidTracking::CountrySummary.least_cases
-        when "most new cases"
+        when "most new"
           puts "The country/countries with the most new cases are: ".light_magenta
           CovidTracking::CountrySummary.most_new_cases
-        when "most recovered cases"
+        when "most recovered"
           puts "The country/countries with the most recovered cases are: ".light_magenta
           CovidTracking::CountrySummary.most_recovered_cases
         else 
           puts "I didn't understand that command.".red
-          sleep(2)
+          sleep(1)
         end
-
+        
+        # Ask the user if they'd like to keep learning
         continue_browsing
         
       else
@@ -140,10 +140,10 @@ class CovidTracking::CLI
   # Helper method for printing the factoids available for the user to view
   def print_factoids_options
     puts "Available factoids are: ".light_magenta
-    puts "     Country/countries with the MOST CASES".red
-    puts "     Country/countries with the LEAST CASES".red 
-    puts "     Country/countries with the MOST NEW CASES".red 
-    puts "     Country/countries with the MOST RECOVERED CASES".red 
+    puts "     Country/countries with the MOST cases".light_red
+    puts "     Country/countries with the LEAST cases".light_red 
+    puts "     Country/countries with the MOST NEW cases".light_red 
+    puts "     Country/countries with the MOST RECOVERED cases".light_red 
   end 
 
   # Exit the program 

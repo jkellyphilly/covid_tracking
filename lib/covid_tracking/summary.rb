@@ -19,17 +19,16 @@ class CovidTracking::Summary
     self.all.clear
   end
   
-  # TODO: print in nicer colors
   def self.print_all
     self.all.each do |summary|
-      puts "#{summary.name}:"
-      puts "    New Confirmed Cases: #{summary.new_confirmed}"
-      puts "    Total Confirmed Cases: #{summary.total_confirmed}"
-      puts "    New Deaths: #{summary.new_deaths}"
-      puts "    Total Deaths: #{summary.total_deaths}"
-      puts "    New Recovered Cases: #{summary.new_recovered}"
-      puts "    Total Recovered Cases: #{summary.total_recovered}"
-      puts "This information was last updated at #{summary.date}"
+      puts "#{summary.name}:".light_cyan
+      puts "    New Confirmed Cases: #{summary.new_confirmed}".light_red
+      puts "    Total Confirmed Cases: #{summary.total_confirmed}".light_red
+      puts "    New Deaths: #{summary.new_deaths}".light_red
+      puts "    Total Deaths: #{summary.total_deaths}".light_red
+      puts "    New Recovered Cases: #{summary.new_recovered}".light_red
+      puts "    Total Recovered Cases: #{summary.total_recovered}".light_red
+      puts "This information was last updated at #{summary.date}".light_cyan
     end
   end
 end
