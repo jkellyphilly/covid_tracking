@@ -15,7 +15,7 @@ class CovidTracking::CLI
     self.data_loader = CovidTracking::DataLoader.new
     sleep(2)
     self.data_loader.make_summaries
-    binding.pry
+    #binding.pry
     program_run
   end
   
@@ -84,15 +84,26 @@ class CovidTracking::CLI
         continue_browsing
         
       elsif user_input == "factoids"
-        puts "Which facts would you like to see?"
-        # print_factoids_options
+        print_factoids_options
+        puts "Which factoid would you like to see?"
+        puts "Please enter MOST CASES, LEAST CASES, MOST NEW CASES, or MOST RECOVERED CASES"
 
-        factoid_input = get.strip.downcase
+        factoid_input = gets.strip.downcase
         
-        #case factoid_input
-        
-        # Country with most cases, country with most new cases, 
-        # countries with least cases, country with most recovered?
+        case factoid_input
+        when "most cases"
+          puts "The country/countries with the most cases are: "
+          CovidTracking::CountrySummary.most_cases
+        when "least cases"
+          puts "The country/countries with the least cases are: "
+          CovidTracking::CountrySummary.least_cases
+        when "most new cases"
+          puts "Coming back to"
+        when "most recovered cases"
+          puts "Coming back to"
+        else 
+          puts "I didn't understand that command."
+        end
 
         continue_browsing
         
@@ -121,6 +132,15 @@ class CovidTracking::CLI
     
     user_input == "yes" ? program_run : sign_off
   end
+  
+  # Helper method for printing the factoids available for the user to view
+  def print_factoids_options
+    puts "Available factoids are: "
+    puts "     Country/countries with the MOST CASES"
+    puts "     Country/countries with the LEAST CASES"
+    puts "     Country/countries with the MOST NEW CASES"
+    puts "     Country/countries with the MOST RECOVERED CASES"
+  end 
 
   # Exit the program 
   def sign_off
