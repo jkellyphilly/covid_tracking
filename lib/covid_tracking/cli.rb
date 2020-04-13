@@ -48,21 +48,23 @@ class CovidTracking::CLI
         sleep(1)
         CovidTracking::CountrySummary.print_all_list
         
-        puts "Please enter a country's name or its 2-letter code (in all caps!) that you'd like to see more info on."
+        puts "Please enter a country's name or its 2-letter code that you'd like to see more info on."
         
         user_country = gets.strip
         
-        # If the user input is 2 characters long and is uppercase, it's a code 
-        if user_country.size == 2 && user_country == user_country.upcase 
+        # If the user input is 2 characters long, it's a code 
+        if user_country.size == 2
           # find the country by its code 
+          country = CovidTracking::CountrySummary.find_by_code(user_country)
         else 
-          # find the country by its name 
+          country = CovidTracking::CountrySummary.find_by_name(user_country)
         end 
         
-        binding.pry
-        
-        # country.print_info
-        sleep(1)
+        if country.size == 0
+          puts "I can't find a country with that name or code."
+        else
+          country.each {|c| c.print_info}
+        end 
         
         # Ask the user if they'd like to keep data surfing        
         continue_browsing
