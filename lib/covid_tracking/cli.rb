@@ -36,8 +36,8 @@ class CovidTracking::CLI
     # TODO: update the time stamp of when this data was updated
     puts "Information is updated from the data source every 15 minutes - this information was last updated at XXX."
     puts "What would you like to learn more about - a GLOBAL summary of COVID-19 spread, or a summary for a specific COUNTRY?"
-    puts "Tip: you can also REFRESH the program to see if data has been updated."
-    puts "Please enter GLOBAL, COUNTRY, REFRESH, or EXIT."
+    puts "Tip: you can also REFRESH the program to see if data has been updated or enter FACTOIDS for some summary facts."
+    puts "Please enter GLOBAL, COUNTRY, REFRESH, FACTOIDS, or EXIT."
     user_input = gets.strip.downcase
     
     until user_input == "exit"
@@ -72,15 +72,20 @@ class CovidTracking::CLI
           end 
         end
         
-        # Ask the user if they'd like to keep data surfing        
+        # Ask the user if they'd like to keep data surfing
+        sleep(2)
         continue_browsing
         
       elsif user_input == "global"
         CovidTracking::Summary.print_all
-        sleep(3)
+        sleep(2)
         
         # Ask the user if they'd like to keep data surfing        
         continue_browsing
+        
+      elsif user_input == "factoids"
+        puts "Which facts would you like to see?"
+        # print_factoids_options
 
       else
         puts "I didn't understand that command."
