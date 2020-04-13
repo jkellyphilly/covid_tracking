@@ -102,9 +102,11 @@ class CovidTracking::CLI
           puts "The country/countries with the most new cases are: "
           CovidTracking::CountrySummary.most_new_cases
         when "most recovered cases"
-          puts "Coming back to"
+          puts "The country/countries with the most recovered cases are: "
+          CovidTracking::CountrySummary.most_recovered_cases
         else 
           puts "I didn't understand that command."
+          sleep(2)
         end
 
         continue_browsing

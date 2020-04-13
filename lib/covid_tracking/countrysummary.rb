@@ -74,14 +74,15 @@ class CovidTracking::CountrySummary < CovidTracking::Summary
     end
   end
   
+  # prints out the countries with the most recovered cases
   def self.most_recovered_cases 
     most_rec_cases = []
     
-    # loop through each element in ALL 
-    # or, find out if there's max function 
-    
-    # most_rec_cases.each do |country|
-    # print out country name and how many recovered cases it has 
-    # end
+    sorted_array = CovidTracking::CountrySummary.all.sort_by {|country| country.total_recovered}
+    most_rec_cases = sorted_array.select {|c| c.total_recovered == sorted_array.last.total_recovered}
+  
+    most_rec_cases.each do |country|
+      puts "     #{country.name}: #{country.total_recovered} out of #{country.total_confirmed} total cases have recovered" 
+    end
   end 
 end
