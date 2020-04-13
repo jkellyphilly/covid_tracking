@@ -33,7 +33,6 @@ class CovidTracking::CLI
   def program_run
     
     # TODO: update the time stamp of when this data was updated
-    # Ask for user input and get it
     puts "Information is updated from the data source every 15 minutes - this information was last updated at XXX."
     puts "What would you like to learn more about - a GLOBAL summary of COVID-19 spread, or a summary for a specific COUNTRY?"
     puts "Tip: you can also REFRESH the program to see if data has been updated."
@@ -53,45 +52,22 @@ class CovidTracking::CLI
         user_country = gets.strip
         binding.pry
         sleep(1)
-        # Ask the user if they'd like to keep data surfing
-        puts "Would you like to keep learning more about COVID-19 spread?"
-        user_input_again = gets.strip.downcase
-        if user_input_again == "yes"
-          program_run
-        elsif user_input_again == "no"
-          sign_off
-          exit
-        else
-          puts "I didn't understand that command."
-          puts "Please enter GLOBAL, COUNTRY, REFRESH, or EXIT."
-        end
+        
+        # Ask the user if they'd like to keep data surfing        
+        continue_browsing
+        
       elsif user_input == "global"
         CovidTracking::Summary.print_all
         sleep(3)
+        
+        # Ask the user if they'd like to keep data surfing        
+        continue_browsing
 
-        # Ask the user if they'd like to keep data surfing
-        puts "Would you like to keep learning more about COVID-19 spread?"
-        user_input_again = gets.strip.downcase
-        
-        until user_input_again == "yes" || user_input_again == "no"
-          puts "I didn't understand that command."
-          puts "Please enter YES or NO"
-          user_input_again = gets.strip.downcase
-        end
-        
-        if user_input_again == "yes"
-          puts "Back to the main program..."
-          sleep(2)
-          program_run
-        else
-          sign_off
-        end
       else
         puts "I didn't understand that command."
         sleep(1)
         puts "Please enter GLOBAL, COUNTRY, REFRESH, or EXIT."
         user_input = gets.strip.downcase
-        sleep(1)
       end
     end
     
@@ -100,9 +76,18 @@ class CovidTracking::CLI
   end
   
   # Helper method for asking if a user wants to continue browsing
-  #def continue_browsing?
+  def continue_browsing
+    puts "Would you like to keep learning more about COVID-19 spread?"
+    user_input = gets.strip.downcase
+        
+    until user_input == "yes" || user_input == "no"
+      puts "I didn't understand that command."
+      puts "Please enter YES or NO"
+      user_input = gets.strip.downcase
+    end
     
-  #end
+    user_input == "yes" ? program_run : sign_off
+  end
 
   # Exit the program 
   def sign_off
