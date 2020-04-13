@@ -66,12 +66,12 @@ class CovidTracking::CountrySummary < CovidTracking::Summary
   def self.most_new_cases
     most_new_cases_array = []
     
-    # loop through each element in ALL 
-    # or, find out if there's a max function for the @@all_countries array 
+    sorted_array = CovidTracking::CountrySummary.all.sort_by {|country| country.new_confirmed}
+    most_new_cases_array = sorted_array.select {|c| c.new_confirmed == sorted_array.last.new_confirmed}
   
-    # most_new_cases_array.each do |country|
-    # print out the country name and how many new cases it has 
-    # end
+    most_new_cases_array.each do |country|
+      puts "     #{country.name}: #{country.new_confirmed} cases" 
+    end
   end
   
   def self.most_recovered_cases 

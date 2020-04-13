@@ -34,6 +34,7 @@ class CovidTracking::CLI
   def program_run
     
     # TODO: update the time stamp of when this data was updated
+    puts "-------"
     puts "Information is updated from the data source every 15 minutes - this information was last updated at XXX."
     puts "What would you like to learn more about - a GLOBAL summary of COVID-19 spread, or a summary for a specific COUNTRY?"
     puts "Tip: you can also REFRESH the program to see if data has been updated or enter FACTOIDS for some summary facts."
@@ -98,7 +99,8 @@ class CovidTracking::CLI
           puts "The country/countries with the least cases are: "
           CovidTracking::CountrySummary.least_cases
         when "most new cases"
-          puts "Coming back to"
+          puts "The country/countries with the most new cases are: "
+          CovidTracking::CountrySummary.most_new_cases
         when "most recovered cases"
           puts "Coming back to"
         else 
