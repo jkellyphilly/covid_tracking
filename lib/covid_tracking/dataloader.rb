@@ -29,8 +29,6 @@ class CovidTracking::DataLoader
   end
   
   def make_summaries 
-    puts "Data loaded. Making the summaries now...".cyan
-    sleep(2)
     
     # First, clean up the given string  
     summary_info = @data.split(/[{}]/)
@@ -39,13 +37,18 @@ class CovidTracking::DataLoader
     # TODO: figure out why global_date is intermittently breaking 
     # Take the first and last elements of the data array, which are 
     # the global summary's name and timestamp
-    #binding.pry
     global_name = summary_info.shift
     global_name.delete!("\":")
     global_date = summary_info.pop
-    #binding.pry
     global_date.delete!("\"],")
-    # TODO: break apart the date or reformat it
+    
+    # Break apart the date and reformat it 
+    date_array = global_date.split(":")
+    date_array.shift
+    global_date = date_array.join(":")
+    global_date.delete!("Z")
+    global_date.gsub!("T", " ")
+    global_date << " (UTC+0:00)"
     
     # Now, use the parser method to store the global's variables
     global_summary_info = summary_info.shift
@@ -94,6 +97,9 @@ class CovidTracking::DataLoader
         value = my_array[0]
       else 
         value = my_array.join(":")
+        value.delete!("Z")
+        value.gsub!("T", " ")
+        value << " (UTC+0:00)"
       end
       
       # TODO: figure out a way to store the date

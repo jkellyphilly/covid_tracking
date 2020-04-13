@@ -2,7 +2,7 @@
 
 class CovidTracking::CLI
 
-  attr_accessor :data_loader
+  attr_accessor :data_loader, :time_stamp
 
   def call
     puts "Welcome to the CoVid-19 Tracker program. I hope you are staying safe and healthy during these unprecedented times.".cyan
@@ -15,6 +15,8 @@ class CovidTracking::CLI
     puts "Loading data now...".cyan
     self.data_loader = CovidTracking::DataLoader.new
     sleep(1.5)
+    puts "Data loaded. Making the summaries now...".cyan
+    sleep(1.5)
     self.data_loader.make_summaries
     program_run
   end
@@ -23,7 +25,7 @@ class CovidTracking::CLI
   # class variables 
   def reload_data
     puts "Refreshing data now...".cyan
-    sleep(1.5)
+    sleep(2)
     CovidTracking::Summary.reset 
     CovidTracking::CountrySummary.reset
     self.data_loader.reset
@@ -32,10 +34,8 @@ class CovidTracking::CLI
   
   # Main user interaction 
   def program_run
-    
-    # TODO: update the time stamp of when this data was updated
     puts "-------".light_magenta
-    puts "Information is updated from the data source every 15 minutes - this information was last updated at XXX.".light_magenta
+    puts "Information is updated from the data source approximately every 15 minutes - this information was last updated at #{CovidTracking::Summary.all.first.date}.".light_magenta
     puts "What would you like to learn more about - a GLOBAL summary of COVID-19 spread, or a summary for a specific COUNTRY?".light_magenta
     puts "Tip: you can also REFRESH the program to see if data has been updated or enter FACTOIDS for some summary facts.".light_magenta
     puts "Please enter GLOBAL, COUNTRY, REFRESH, FACTOIDS, or EXIT.".green
