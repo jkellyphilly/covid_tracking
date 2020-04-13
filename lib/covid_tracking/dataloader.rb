@@ -90,7 +90,6 @@ class CovidTracking::DataLoader
     
     # Iterate through the given information and update the hash
     info.each do |entry|
-      # TODO: rename my_array
       my_array = entry.split(":")
       title = my_array.shift
       if my_array.size == 1 
@@ -102,7 +101,6 @@ class CovidTracking::DataLoader
         value << " (UTC+0:00)"
       end
       
-      # TODO: figure out a way to store the date
       case title 
       when "NewConfirmed"
         return_hash["new_confirmed"] = value.to_i

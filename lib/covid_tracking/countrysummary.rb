@@ -84,4 +84,9 @@ class CovidTracking::CountrySummary < CovidTracking::Summary
       puts "     #{country.name}: #{country.total_recovered} out of #{country.total_confirmed} total cases have recovered".light_cyan 
     end
   end 
+  
+  # TODO: create method for number of minutes ago? 
+  # def minutes_ago
+  
+  # end
 end
