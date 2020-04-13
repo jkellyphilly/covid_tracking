@@ -29,7 +29,7 @@ class CovidTracking::DataLoader
   end
   
   def make_summaries 
-    puts "Data loaded. Making the summaries now..."
+    puts "Data loaded. Making the summaries now...".cyan
     sleep(2)
     
     # First, clean up the given string  
@@ -69,9 +69,8 @@ class CovidTracking::DataLoader
         country_hash = parser(country_info)
         CovidTracking::CountrySummary.new(country_hash)
       end
-      #binding.pry
     else 
-      puts "Error in make country summaries: API data format has changed and no longer is compatible with this code."
+      puts "Error in make country summaries: API data format has changed and no longer is compatible with this code.".red
     end
     
   end
@@ -96,9 +95,6 @@ class CovidTracking::DataLoader
       else 
         value = my_array.join(":")
       end
-      # TODO: Build a method that converts the CamelCase title 
-      # into a string_like_this that I can use to make it easier 
-      # to make a key
       
       # TODO: figure out a way to store the date
       case title 
