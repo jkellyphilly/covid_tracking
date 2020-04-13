@@ -114,7 +114,7 @@ class CovidTracking::CLI
       else
         puts "I didn't understand that command.".red
         sleep(1)
-        puts "Please enter GLOBAL, COUNTRY, REFRESH, or EXIT.".green
+        puts "Please enter GLOBAL, COUNTRY, REFRESH, FACTOIDS, or EXIT.".green
         user_input = gets.strip.downcase
       end
     end

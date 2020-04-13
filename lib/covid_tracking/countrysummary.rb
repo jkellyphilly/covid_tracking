@@ -45,7 +45,7 @@ class CovidTracking::CountrySummary < CovidTracking::Summary
     most_cases_array = sorted_array.select {|c| c.total_confirmed == sorted_array.last.total_confirmed}
   
     most_cases_array.each do |country|
-      puts "     #{country.name}: #{country.total_confirmed} cases".light_cyan 
+      puts "     #{country.name}: #{country.total_confirmed} total cases".light_cyan 
     end
   end
   
@@ -57,7 +57,7 @@ class CovidTracking::CountrySummary < CovidTracking::Summary
     least_cases_array = sorted_array.select {|c| c.total_confirmed == sorted_array.first.total_confirmed}
   
     least_cases_array.each do |country|
-      puts "     #{country.name}: #{country.total_confirmed} cases".light_cyan
+      puts "     #{country.name}: #{country.total_confirmed} total cases".light_cyan
     end
   end 
   
@@ -69,7 +69,7 @@ class CovidTracking::CountrySummary < CovidTracking::Summary
     most_new_cases_array = sorted_array.select {|c| c.new_confirmed == sorted_array.last.new_confirmed}
   
     most_new_cases_array.each do |country|
-      puts "     #{country.name}: #{country.new_confirmed} cases".light_cyan
+      puts "     #{country.name}: #{country.new_confirmed} new cases".light_cyan
     end
   end
   
@@ -84,9 +84,5 @@ class CovidTracking::CountrySummary < CovidTracking::Summary
       puts "     #{country.name}: #{country.total_recovered} out of #{country.total_confirmed} total cases have recovered".light_cyan 
     end
   end 
-  
-  # TODO: create method for number of minutes ago? 
-  # def minutes_ago
-  
-  # end
+
 end

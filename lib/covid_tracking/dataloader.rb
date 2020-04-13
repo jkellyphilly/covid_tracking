@@ -34,7 +34,6 @@ class CovidTracking::DataLoader
     summary_info = @data.split(/[{}]/)
     summary_info.reject! {|entry| entry == "" || entry == "\n" || entry == ","}
     
-    # TODO: figure out why global_date is intermittently breaking 
     # Take the first and last elements of the data array, which are 
     # the global summary's name and timestamp
     global_name = summary_info.shift
@@ -63,7 +62,6 @@ class CovidTracking::DataLoader
     
     country_section_heading = summary_info.shift
     country_section_heading.delete!(",\":[")
-    #binding.pry
     
     if country_section_heading == "Countries"
       summary_info.each do |country_info|
