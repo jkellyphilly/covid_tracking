@@ -24,7 +24,7 @@ This application is user-interactive and is intended for users to become more in
 
 Essentially, users are greeted and then given a choice to view global data, data about a specific country, refresh the data, or view specific facts that have helper methods to calculate. If the user selects to view information about a specific country, there is one more level deeper that the user is taken - the user is prompted to input the country's name or 2-letter code (the full list of countries with their codes are printed out before this prompt appears). 
 
-TODO: include the link to walkthrough of code on YouTube. 
+Check out this explanation on YouTube (it's a 3-part series of me explaning this code): https://www.youtube.com/watch?v=WtBNjnAgj3s
 
 ## Development
 
