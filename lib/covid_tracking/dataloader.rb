@@ -16,13 +16,20 @@ class CovidTracking::DataLoader
   # Retrieve the data via COVID19 API
   def call
     
+    # create URI::HTTPS object using the url of the API 
     url = URI("https://api.covid19api.com/summary")
+    
+    # create new Net::HTTP object
     https = Net::HTTP.new(url.host, url.port);  
+    
+    # turn on SSL flag 
     https.use_ssl = true
-
+    
+    # create Net::HTTP::Get object with the url
     request = Net::HTTP::Get.new(url)
-    #binding.pry
-
+    
+    # use the Net::HTTP object to send a request for the information
+    # and return the data via a string 
     response = https.request(request).read_body
     
   end
