@@ -1,8 +1,6 @@
 # CovidTracking
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/covid_tracking`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+This gem uses the COVID19 API to return a summary of coronavirus cases throughout the world. A user is able to specify whether they'd like to view a summary of COVID data about the world, or whether they'd like to view a specific country's statistics. Users can also reload the data to see if the data has been refreshed or view some max/min statistics. 
 
 ## Installation
 
@@ -22,7 +20,11 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+This application is user-interactive and is intended for users to become more informed of the statistics and spread of COVID-19. The code in the driver file (/lib/covid_tracking/cli.rb) prints out clear instructions to the user when input is required. 
+
+Essentially, users are greeted and then given a choice to view global data, data about a specific country, refresh the data, or view specific facts that have helper methods to calculate. If the user selects to view information about a specific country, there is one more level deeper that the user is taken - the user is prompted to input the country's name or 2-letter code (the full list of countries with their codes are printed out before this prompt appears). 
+
+TODO: include the link to walkthrough of code on YouTube. 
 
 ## Development
 
