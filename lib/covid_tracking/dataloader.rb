@@ -13,8 +13,7 @@ class CovidTracking::DataLoader
     @data = self.call
   end
   
-  # TODO: Explain this method more fully
-  # Retrieve the data via COVID API
+  # Retrieve the data via COVID19 API
   def call
     
     url = URI("https://api.covid19api.com/summary")
