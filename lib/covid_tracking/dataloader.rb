@@ -78,8 +78,7 @@ class CovidTracking::DataLoader
         # only load the country if one doesn't exist
       end
     else
-      # TODO: make this a custom error message
-      puts "Error in make country summaries: API data format has changed and no longer is compatible with this code.".red
+      raise DataError
     end
 
   end
@@ -135,5 +134,11 @@ class CovidTracking::DataLoader
   def reset
     @data = self.call
     make_summaries
+  end
+
+  class DataError < StandardError
+    def message
+      "API data return format has changed: code will need to be updated."
+    end
   end
 end
