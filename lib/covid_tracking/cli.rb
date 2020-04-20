@@ -34,7 +34,8 @@ class CovidTracking::CLI
 
   # Main user interaction
   def program_run
-    print_user_options
+
+    print_main_user_options
     user_input = gets.strip.downcase
 
     until user_input == "exit"
@@ -46,28 +47,9 @@ class CovidTracking::CLI
         print_all_countries
         puts "Enter a country's name or 2-letter code for more info:".green
 
+        # Let a user choose which country they want to learn more about
+        # and then print that information
         print_country_info
-        # country = []
-        #
-        # while country.size == 0
-        #   user_country = gets.strip
-        #
-        #   # If the user input is 2 characters long, it's a code
-        #   if user_country.size == 2
-        #     # find the country by its code
-        #     country = CovidTracking::CountrySummary.find_by_code(user_country)
-        #   else
-        #     country = CovidTracking::CountrySummary.find_by_name(user_country)
-        #   end
-        #
-        #   if country.size == 0
-        #     puts "I can't find a country with that name or code.".red
-        #     sleep(1)
-        #     puts "Enter a country's name or 2-letter code for more info:".green
-        #   else
-        #     country.each {|c| c.print_info}
-        #   end
-        # end
 
         # Ask the user if they'd like to keep learning
         continue_browsing
@@ -81,28 +63,9 @@ class CovidTracking::CLI
 
       elsif user_input == "factoids"
         print_factoids_options
-        puts "Which factoid would you like to see?".light_magenta
-        puts "Please enter MOST, LEAST, MOST NEW, or MOST RECOVERED".green
 
-        factoid_input = gets.strip.downcase
-
-        case factoid_input
-        when "most"
-          puts "The country/countries with the most cases are: ".light_magenta
-          CovidTracking::CountrySummary.most_cases
-        when "least"
-          puts "The country/countries with the least cases are: ".light_magenta
-          CovidTracking::CountrySummary.least_cases
-        when "most new"
-          puts "The country/countries with the most new cases are: ".light_magenta
-          CovidTracking::CountrySummary.most_new_cases
-        when "most recovered"
-          puts "The country/countries with the most recovered cases are: ".light_magenta
-          CovidTracking::CountrySummary.most_recovered_cases
-        else
-          puts "I didn't understand that command.".red
-          sleep(1)
-        end
+        # Get user input and show the corresponding factoid
+        print_factoids
 
         # Ask the user if they'd like to keep learning
         continue_browsing
@@ -131,6 +94,7 @@ class CovidTracking::CLI
     CovidTracking::Summary.print_all
   end
 
+  # Gets a user's input and print's out the corresponding country's info
   def print_country_info
     country = []
 
@@ -139,7 +103,6 @@ class CovidTracking::CLI
 
       # If the user input is 2 characters long, it's a code
       if user_country.size == 2
-        # find the country by its code
         country = CovidTracking::CountrySummary.find_by_code(user_country)
       else
         country = CovidTracking::CountrySummary.find_by_name(user_country)
@@ -156,7 +119,7 @@ class CovidTracking::CLI
   end
 
   # Helper method to print the user's options at the top level
-  def print_user_options
+  def print_main_user_options
     puts "-------".light_magenta
     puts "Information is updated from the data source approximately every 15 minutes - this information was last updated at #{CovidTracking::Summary.all.first.date}.".light_magenta
     puts "-------".light_magenta
@@ -186,6 +149,31 @@ class CovidTracking::CLI
     puts "     Country/countries with the LEAST cases".light_red
     puts "     Country/countries with the MOST NEW cases".light_red
     puts "     Country/countries with the MOST RECOVERED cases".light_red
+    puts "Which factoid would you like to see?".light_magenta
+    puts "Please enter MOST, LEAST, MOST NEW, or MOST RECOVERED".green
+  end
+
+  # Get a user's input and print the corresponding factoid
+  def print_factoids
+    factoid_input = gets.strip.downcase
+
+    case factoid_input
+    when "most"
+      puts "The country/countries with the most cases are: ".light_magenta
+      CovidTracking::CountrySummary.most_cases
+    when "least"
+      puts "The country/countries with the least cases are: ".light_magenta
+      CovidTracking::CountrySummary.least_cases
+    when "most new"
+      puts "The country/countries with the most new cases are: ".light_magenta
+      CovidTracking::CountrySummary.most_new_cases
+    when "most recovered"
+      puts "The country/countries with the most recovered cases are: ".light_magenta
+      CovidTracking::CountrySummary.most_recovered_cases
+    else
+      puts "I didn't understand that command.".red
+      sleep(1)
+    end
   end
 
   # Exit the program
