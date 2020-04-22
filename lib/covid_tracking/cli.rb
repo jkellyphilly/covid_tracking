@@ -2,15 +2,16 @@
 
 class CovidTracking::CLI
 
-  attr_accessor :data_loader, :time_stamp
+  attr_accessor :data_loader
 
+  # Welcome the user to the program and kick off the data load process
   def call
     puts "Welcome to the CoVid-19 Tracker program. I hope you are staying safe and healthy during these unprecedented times.".cyan
     sleep(1.5)
     load_data
   end
 
-  # Make a call to the DataLoader class to load all of our information in.
+  # Make a call to the DataLoader class to load all of our information in
   def load_data
     puts "Loading data now...".cyan
     self.data_loader = CovidTracking::DataLoader.new
