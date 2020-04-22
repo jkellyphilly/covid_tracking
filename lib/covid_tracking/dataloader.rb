@@ -30,6 +30,9 @@ class CovidTracking::DataLoader
 
     # use the Net::HTTP object to send a request for the information
     # and return the data via a string
+    # TODO: check out JSON link
+    #   see if I can parse with https://ruby-doc.org/stdlib-2.6.3/libdoc/json/rdoc/JSON.html
+    #   or, check out HTTParty (Ruby gem)
     response = https.request(request).read_body
 
   end
