@@ -2,7 +2,7 @@
 
 class CovidTracking::Summary
 
-  attr_accessor :name, :new_confirmed, :total_confirmed, :new_deaths, :total_deaths, :new_recovered, :total_recovered, :date
+  attr_accessor :country, :new_confirmed, :total_confirmed, :new_deaths, :total_deaths, :new_recovered, :total_recovered, :date
 
   @@all = []
 
@@ -21,7 +21,7 @@ class CovidTracking::Summary
 
   def self.print_all
     self.all.each do |summary|
-      puts "#{summary.name}:".light_cyan
+      puts "#{summary.country}:".light_cyan
       puts "    New Confirmed Cases: #{summary.new_confirmed}".light_red
       puts "    Total Confirmed Cases: #{summary.total_confirmed}".light_red
       puts "    New Deaths: #{summary.new_deaths}".light_red

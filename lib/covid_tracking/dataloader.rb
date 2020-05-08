@@ -30,6 +30,7 @@ class CovidTracking::DataLoader
     if @data.key?("Global") && @data.key?("Countries") && @data.key?("Date")
       global_data = @data["Global"]
       global_data["Date"] = @data["Date"]
+      global_data["Country"] = "Global"
 
       # Clean up global_data with the parser method
       global_hash = parser(global_data)
@@ -48,30 +49,16 @@ class CovidTracking::DataLoader
   # the formatting of a Summary object
   def parser(info_hash)
     return_hash = {}
+    info_hash.delete("Slug")
 
     # Iterate through the given information and update the hash
     info_hash.each do |key, value|
+      attribute = camel_to_snake(key)
 
-      # TODO: make a helper method to convert CamelCase into underscore
-      case key
-      when "NewConfirmed"
-        return_hash["new_confirmed"] = value
-      when "TotalConfirmed"
-        return_hash["total_confirmed"] = value
-      when "NewDeaths"
-        return_hash["new_deaths"] = value
-      when "TotalDeaths"
-        return_hash["total_deaths"] = value
-      when "NewRecovered"
-        return_hash["new_recovered"] = value
-      when "TotalRecovered"
-        return_hash["total_recovered"] = value
-      when "Country"
-        return_hash["name"] = value
-      when "CountryCode"
-        return_hash["country_code"] = value
-      when "Date"
-        return_hash["date"] = date_formatter(value)
+      if attribute == "date"
+        return_hash[attribute] = date_formatter(value)
+      else
+        return_hash[attribute] = value
       end
     end
 
@@ -88,6 +75,11 @@ class CovidTracking::DataLoader
     return_date = date_array.join(":")
 
     return_date << " (UTC+0:00)"
+  end
+
+  # Convert CamelCase to snake_case
+  def camel_to_snake(input)
+    input.gsub(/([a-z\d])([A-Z])/,'\1_\2').downcase
   end
 
   def reset
