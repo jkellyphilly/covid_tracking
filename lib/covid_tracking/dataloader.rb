@@ -15,71 +15,29 @@ class CovidTracking::DataLoader
 
   # Retrieve the data via COVID19 API
   def call
-
-    # create URI::HTTPS object using the url of the API
     url = URI("https://api.covid19api.com/summary")
-
-    # create new Net::HTTP object
     https = Net::HTTP.new(url.host, url.port);
-
-    # turn on SSL flag
     https.use_ssl = true
 
-    # create Net::HTTP::Get object with the url
     request = Net::HTTP::Get.new(url)
-
-    # use the Net::HTTP object to send a request for the information
-    # and return the data via a string
-    # TODO: check out JSON link
-    #   see if I can parse with https://ruby-doc.org/stdlib-2.6.3/libdoc/json/rdoc/JSON.html
-    #   or, check out HTTParty (Ruby gem)
     response = https.request(request).read_body
 
+    data_hash = JSON.parse(response)
   end
 
+  # Make all Summary and CountrySummary objects
   def make_summaries
+    if @data.key?("Global") && @data.key?("Countries") && @data.key?("Date")
+      global_data = @data["Global"]
+      global_data["Date"] = @data["Date"]
 
-    # First, clean up the given string
-    summary_info = @data.split(/[{}]/)
-    summary_info.reject! {|entry| entry == "" || entry == "\n" || entry == ","}
+      # Clean up global_data with the parser method
+      global_hash = parser(global_data)
 
-    # Take the first and last elements of the data array, which are
-    # the global summary's name and timestamp
-    global_name = summary_info.shift
-    global_name.delete!("\":")
-    global_date = summary_info.pop
-    global_date.delete!("\"],")
+      # Create the Summary object for global info
+      CovidTracking::Summary.new(global_hash)
 
-    # Break apart the date and reformat it
-    date_array = global_date.split(":")
-    date_array.shift
-    global_date = date_array.join(":")
-    global_date.delete!("Z")
-    global_date.gsub!("T", " ")
-    global_date << " (UTC+0:00)"
-
-    # Now, use the parser method to store the global's variables
-    global_summary_info = summary_info.shift
-    global_hash = parser(global_summary_info)
-
-    # Update the global hash to include the name and date
-    global_hash["name"] = global_name
-    global_hash["date"] = global_date
-
-    # Create the Summary object for global info
-    CovidTracking::Summary.new(global_hash)
-
-    country_section_heading = summary_info.shift
-    country_section_heading.delete!(",\":[")
-
-    if country_section_heading == "Countries"
-      summary_info.each do |country_info|
-        # Format the country_info string properly and create a hash with it
-        country_info.delete!("\"")
-        country_hash = parser(country_info)
-        CovidTracking::CountrySummary.new(country_hash)
-        # only load the country if one doesn't exist
-      end
+      @data["Countries"].each {|ctry_info| CovidTracking::CountrySummary.new(parser(ctry_info))}
     else
       raise DataError
     end
@@ -88,50 +46,48 @@ class CovidTracking::DataLoader
 
   # Returns a hash with key/value pairs to match
   # the formatting of a Summary object
-  def parser(info_string)
+  def parser(info_hash)
     return_hash = {}
 
-    # Format the info_string properly and break apart into
-    # an array with all components
-    info_string.delete!("\"")
-    info = info_string.split(",")
-
     # Iterate through the given information and update the hash
-    info.each do |entry|
-      my_array = entry.split(":")
-      title = my_array.shift
-      if my_array.size == 1
-        value = my_array[0]
-      else
-        value = my_array.join(":")
-        value.delete!("Z")
-        value.gsub!("T", " ")
-        value << " (UTC+0:00)"
-      end
+    info_hash.each do |key, value|
 
-      case title
+      # TODO: make a helper method to convert CamelCase into underscore
+      case key
       when "NewConfirmed"
-        return_hash["new_confirmed"] = value.to_i
+        return_hash["new_confirmed"] = value
       when "TotalConfirmed"
-        return_hash["total_confirmed"] = value.to_i
+        return_hash["total_confirmed"] = value
       when "NewDeaths"
-        return_hash["new_deaths"] = value.to_i
+        return_hash["new_deaths"] = value
       when "TotalDeaths"
-        return_hash["total_deaths"] = value.to_i
+        return_hash["total_deaths"] = value
       when "NewRecovered"
-        return_hash["new_recovered"] = value.to_i
+        return_hash["new_recovered"] = value
       when "TotalRecovered"
-        return_hash["total_recovered"] = value.to_i
+        return_hash["total_recovered"] = value
       when "Country"
         return_hash["name"] = value
       when "CountryCode"
         return_hash["country_code"] = value
       when "Date"
-        return_hash["date"] = value
+        return_hash["date"] = date_formatter(value)
       end
     end
 
     return_hash
+  end
+
+  # Helper method for converting the date into user-friendly reading
+  def date_formatter(date)
+    date_array = date.split(":")
+
+    # Clean up formatting
+    date_array.first.gsub!("T", " ")
+    date_array.last.delete!("Z")
+    return_date = date_array.join(":")
+
+    return_date << " (UTC+0:00)"
   end
 
   def reset
