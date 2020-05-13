@@ -1,4 +1,3 @@
-require 'pry'
 require "uri"
 require "net/http"
 require "colorize"
