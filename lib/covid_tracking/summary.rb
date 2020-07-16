@@ -2,7 +2,7 @@
 
 class CovidTracking::Summary
 
-  attr_accessor :country, :new_confirmed, :total_confirmed, :new_deaths, :total_deaths, :new_recovered, :total_recovered, :date
+  attr_accessor :country, :new_confirmed, :total_confirmed, :new_deaths, :total_deaths, :new_recovered, :total_recovered, :date, :premium
 
   @@all = []
 
